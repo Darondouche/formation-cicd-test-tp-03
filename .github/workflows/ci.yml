@@ -105,20 +105,24 @@ jobs:
         uses: zaproxy/action-baseline@v0.12.0
         with:
           target: 'http://localhost:8080'
-          rules_file_name: '.zap/rules.tsv' # Optionnel, ignorez si pas de fichier de règles
-          cmd_options: '-a' # Inclure les règles alpha (plus strict)
-          allow_issue_writing: false # Ne pas créer d'issues dans GitHub
-          fail_action: false # true = fait échouer le job si faille, false = juste un warning
+          # rules_file_name: '.zap/rules.tsv'  <-- Commentez si vous n'avez pas ce fichier
+          cmd_options: '-a'
+          allow_issue_writing: false
+          fail_action: false
 
-# --- ETAPE 9 : Conserver les rapports de sécurité ---
+      # 👇 AJOUT : Etape de debug pour voir les fichiers générés
+      - name: Debug - List ZAP files
+        if: always()
+        run: |
+          echo "Listing all files in workspace:"
+          ls -la
+
+      # --- ETAPE 9 : Conserver les rapports de sécurité ---
       - name: Upload Security Reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          # 👇 CORRECTION ICI : Utilisez des tirets, c'est plus sûr
+          # 1. Nom corrigé (Tirets uniquement)
           name: zap-security-reports 
-          path: |
-            zap_report.html
-            zap-baseline-report.html
-            zap-baseline-report.json
-            zap-baseline-report.md
+          # 2. Chemin corrigé (On prend tout ce qui commence par zap)
+          path: zap*
