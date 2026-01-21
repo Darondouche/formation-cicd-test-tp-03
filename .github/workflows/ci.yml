@@ -102,7 +102,7 @@ jobs:
 
       # --- ETAPE 8 : Scan OWASP ZAP ---
       - name: OWASP ZAP Baseline Scan
-        uses: zaproxy/action-baseline@v0.12.0
+        uses: zaproxy/action-baseline@v0.14.0
         with:
           target: 'http://localhost:8080'
           # rules_file_name: '.zap/rules.tsv'  <-- Commentez si vous n'avez pas ce fichier
@@ -125,4 +125,7 @@ jobs:
           # 1. Nom corrigé (Tirets uniquement)
           name: zap-security-reports 
           # 2. Chemin corrigé (On prend tout ce qui commence par zap)
-          path: zap*
+          path: |
+            report_html.html
+            report_json.json
+            report_md.md
