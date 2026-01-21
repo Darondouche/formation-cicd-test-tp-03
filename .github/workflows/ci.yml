@@ -110,12 +110,13 @@ jobs:
           allow_issue_writing: false # Ne pas créer d'issues dans GitHub
           fail_action: false # true = fait échouer le job si faille, false = juste un warning
 
-      # --- ETAPE 9 : Conserver les rapports de sécurité ---
+# --- ETAPE 9 : Conserver les rapports de sécurité ---
       - name: Upload Security Reports
-        if: always() # Indispensable pour voir le rapport si ZAP trouve des failles !
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: zap-security-reports
+          # 👇 CORRECTION ICI : Utilisez des tirets, c'est plus sûr
+          name: zap-security-reports 
           path: |
             zap_report.html
             zap-baseline-report.html
