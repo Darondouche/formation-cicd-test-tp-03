@@ -48,11 +48,11 @@ jobs:
       # Étape 5 : Exécution des tests Hurl (Script du TP)
       - name: Run API tests (Hurl via Docker)
         run: |
-          docker run --rm \
+            docker run --rm \
             --add-host=host.docker.internal:host-gateway \
             -v ${{ github.workspace }}:/work \
             ghcr.io/orange-opensource/hurl:latest \
-            --test /work/src/test/java/api/*.hurl
+            --test /work/src/test/java/api/health.hurl /work/src/test/java/api/orders.hurl
 
       # Pour le debug si ça plante
       - name: Show application logs on failure
